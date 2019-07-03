@@ -3,7 +3,7 @@ import pandas as pd
 import pybobyqa
 
 from norpy import simulate
-from norpy import get_random_model_specification, get_model_obj
+from norpy.model_spec import get_random_model_specification
 from smm_prep import get_moments, get_weigthing_matrix
 from norpy.adapter.SimulationBasedEstimation import SimulationBasedEstimationCls
 from optimizers.auxiliray_pyogba import wrapper_pybobyqa
@@ -11,7 +11,6 @@ from optimizers.auxiliray_pyogba import wrapper_pybobyqa
 # Define which paramteres to optimize over!
 # Which one do we start with anyways
 # Shall we specify a full contraint vector ????????
-#This is a quite ugly workaround! Think abut better way
 optim_paras = {
     "coeffs_common": slice(0, 2),
     "coeffs_home": slice(2, 5),

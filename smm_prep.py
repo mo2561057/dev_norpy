@@ -18,30 +18,12 @@ def moments_dict_to_list(moments_dict):
             moments_list.extend(moments_dict[group][period])
     return moments_list
 
-
-def extract_relevant_results(array):
-    if type(array) == np.ndarray:
-
-        df = pd.DataFrame(
-            {
-                "period": list(array[:, 1]),
-                "choice": list(array[:, 2]),
-                "wages": list(array[:, 3]),
-            }
-        )
-    else:
-        df = array
-    return df
-
-
-def get_moments(result_array, is_store=False):
+def get_moments(analysis_df, is_store=False):
     """This function computes the moments based on a dataframe.
        Maybe we want another function to put the results of the simulation into
        a pd DataFrame altough would suggest that this is faster !
     """
-    # Is des sinnvoll den hier reinzupacken? Könnte langsam werden
-
-    analysis_df = extract_relevant_results(result_array)
+    #Brauchen wir des jetzt überhaupt noch ?
     moments = OrderedDict()
     for group in ["Wage Distribution", "Choice Probability"]:
         moments[group] = OrderedDict()
