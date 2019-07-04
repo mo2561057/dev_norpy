@@ -16,6 +16,10 @@ optim_paras = {
     "coeffs_home": slice(2, 5),
     "coeffs_edu": slice(5, 12),
     "coeffs_work": slice(12, 25),
+    "type_spec_shifts": slice(25, 34),
+    "shocks_cov":slice(25, 34),
+#    "delta":slice(34, 35)
+
 }
 ###We want to generate a set of obeservations to be simulated. WHich decsions do we need
 num_agents_obs = 100
@@ -45,7 +49,18 @@ moment_obs = get_moments(sim_df)
 
 weighting_matrix = get_weigthing_matrix(sim_df, num_agents_obs, num_boots)
 
-initialization_object = get_random_model_specification(constr = {"num_periods":20,"num_agents_sim":5})
+
+initialization_object = get_random_model_specification(constr = {"num_periods":49,
+                                                                 "num_agents_sim":5000,
+                                                                 "num_types":3,
+                                                                 "num_edu_start":1,
+                                                                 "edu_range_start":np.array([9]),
+                                                                 "type_prob_cond_schooling":np.array([1/3]*3).reshape(1,3),
+                                                                 "initial_lagged_schooling_prob":0.5,
+                                                                 "delta":0.96
+                                                                 },
+                                                       p_constr = {"coeffs_edu": [6,0]}
+                                                       )
 
 # Now we start with the optimization
 args = (
