@@ -28,9 +28,16 @@ moments_final["Choice Probability"] = OrderedDict(
 #moments_final["Wage Distribution"] = OrderedDict(
 #    {x:moments_import["Wage Distribution"][x][0] for x in moments_import["Wage Distribution"].keys() }
 #)
-moments_final["Wage Distribution"] = moments_import["Wages Distribution"]
+moments_final["Wage Distribution"] = moments_import["Wage Distribution"]
 
 moments_final["Final Schooling"] = moments_import["Final Schooling"]
 
 #weighting
-weigthing_final = weigthing_import
+
+array_kick =np.concatenate((np.arange(76,80), np.arange(81, len(weigthing_import)-30, 4)))
+
+weigthing_intermed = weigthing_import[:-32,:-32]
+
+weigthing_final = np.delete(weigthing_intermed,array_kick,0)
+
+weigthing_final = np.delete(weigthing_final,array_kick,1)

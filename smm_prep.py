@@ -33,9 +33,10 @@ def get_moments(analysis_df, is_store=False):
     # the dictionary.
 
     info = analysis_df.copy().groupby("period")["wages"].describe().to_dict()
+    #print(analysis_df.copy()[analysis_df["period"]==1]["wages"])
     for period in sorted(analysis_df["period"].unique().tolist()):
-        if pd.isnull(info["std"][period]):
-            continue
+        #if pd.isnull(info["std"][period]):
+        #    continue
         moments["Wage Distribution"][period] = []
         for label in ["mean", "std"]:
             moments["Wage Distribution"][period].append(info[label][period])
@@ -85,7 +86,7 @@ def get_weigthing_matrix(df_base, num_boots, num_agents_smm):
                         raise NotImplementedError
 
             moments_sample.append(moments_boot)
-
+            print(moments_boot)
             num_valid += 1
             if num_valid == num_boots:
                 break
