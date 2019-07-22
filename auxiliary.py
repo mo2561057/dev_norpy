@@ -1,5 +1,7 @@
 """
-Prep the original data !
+Prep the original data.
+The weighting matrix is cut out to remove elements that we are less interested in.
+Its not clear whether it is matcing exactly but the scale seems to be fine.
 """
 import os
 import pickle
@@ -38,6 +40,12 @@ array_kick =np.concatenate((np.arange(76,80), np.arange(81, len(weigthing_import
 
 weigthing_intermed = weigthing_import[:-32,:-32]
 
+#Weigthing matrix for leaving the final schooling out
 weigthing_final = np.delete(weigthing_intermed,array_kick,0)
-
 weigthing_final = np.delete(weigthing_final,array_kick,1)
+
+#weigthimg matrix with final schooling
+weigthing_schooling = np.delete(weigthing_import[:-2,:-2],array_kick,0)
+weigthing_schooling = np.delete(weigthing_schooling,array_kick,1)
+
+

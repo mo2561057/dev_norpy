@@ -1,7 +1,4 @@
-"""
-Run the model with the original moments
-"""
-import numpy as np
+"""import numpy as np
 import pandas as pd
 import pybobyqa
 
@@ -11,6 +8,9 @@ from smm_prep import get_moments, get_weigthing_matrix
 from norpy.adapter.SimulationBasedEstimation import SimulationBasedEstimationCls
 from optimizers.auxiliray_pyogba import wrapper_pybobyqa
 from auxiliary import moments_final, weigthing_final
+Run the model with the original moments
+"""
+
 
 # Container for optimization
 optim_paras = {
@@ -92,7 +92,15 @@ initialization_object = get_random_model_specification(
             "seed_sim": 132,
             "seed_emax": 456,
             "edu_range_start": np.array([9]),
-            "type_prob_cond_schooling": np.array([1 / 4] * 4).reshape(1, 4),
+            "type_shares": np.array([0.0,
+                                     0.0,
+                                     0.083296202210043,
+                                     0.0,
+                                     -1.166351815552428,
+                                     0.0,
+                                     0.560420764935477,
+                                     0.0
+                                    ]),
             "intial_lagged_schooling_prob": float(1),
             "delta": 0.926,
             #"shocks_cov": np.array([1.90836000e-01, -4.06073119e+04, -4.33622160e+04,

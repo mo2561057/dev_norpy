@@ -57,6 +57,14 @@ def get_moments(analysis_df, is_store=False):
                 stat = 0.00
             moments["Choice Probability"][period].append(stat)
 
+#    info = analysis_df['edu'].groupby('agent').max().value_counts(normalize=True).to_dict()
+#    for edu_max in range(30):
+#        try:
+#            stat = info[edu_max]
+#        except KeyError:
+#            stat = 0
+#       moments['Final Schooling'][edu_max] = [stat]
+
     return moments
 
 
