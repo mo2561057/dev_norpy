@@ -1,4 +1,4 @@
-"""import numpy as np
+import numpy as np
 import pandas as pd
 import pybobyqa
 
@@ -8,14 +8,14 @@ from smm_prep import get_moments, get_weigthing_matrix
 from norpy.adapter.SimulationBasedEstimation import SimulationBasedEstimationCls
 from optimizers.auxiliray_pyogba import wrapper_pybobyqa
 from auxiliary import moments_final, weigthing_final
-Run the model with the original moments
-"""
+
+# Run the model with the original moments
 
 
 # Container for optimization
 optim_paras = {
-    "coeffs_common": slice(0,2),
-    "coeffs_home": slice(2,4),
+    "coeffs_common": slice(0, 2),
+    "coeffs_home": slice(2, 4),
     "coeffs_edu": slice(4, 10),
     "coeffs_work": slice(10, 22),
     "type_spec_shifts": slice(22, 31),
@@ -43,7 +43,6 @@ box_dict = {
                    (-300000.0, -100000.0),
                    (-400000.0, 20000.0),
                    (-300000.0, -1000.0)
-
 
                    ],
     "coeffs_work": [(10.5, 12.1),
@@ -77,7 +76,7 @@ box_dict = {
                    (-100000, 100000),
                    (-100000, 100000),
                    (-100000, 100000),
-                    (-10000000000, 100000000000)
+                   (-10000000000, 100000000000)
                    ]
 
 }
@@ -100,18 +99,18 @@ initialization_object = get_random_model_specification(
                                      0.0,
                                      0.560420764935477,
                                      0.0
-                                    ]),
+                                     ]),
             "intial_lagged_schooling_prob": float(1),
             "delta": 0.926,
-            #"shocks_cov": np.array([1.90836000e-01, -4.06073119e+04, -4.33622160e+04,
+            # "shocks_cov": np.array([1.90836000e-01, -4.06073119e+04, -4.33622160e+04,
             #                        -4.06073119e+04, 5.70574437e+10, -5.68684800e+04,
             #                        -4.33622160e+04, -5.68684800e+04, 3.15822658e+10]),
-            #"shocks_cov":np.array([1.02400000e-01, 7.64376499e+04, 5.68702352e+04,
+            # "shocks_cov":np.array([1.02400000e-01, 7.64376499e+04, 5.68702352e+04,
             #                       7.64376499e+04, 5.70577570e+10, 4.24514368e+10,
             #                       5.68702352e+04, 4.24514368e+10, 3.15842153e+10]),
-            "shocks_cov":np.array([ 1.02400000e-01, -5.47200000e-02, -7.80800000e-02,
-                                   -5.47200000e-02,  5.70577589e+10, -7.64376094e+04,
-                                   -7.80800000e-02, -7.64376094e+04,  3.15842153e+10]),
+            "shocks_cov": np.array([1.02400000e-01, -5.47200000e-02, -7.80800000e-02,
+                                    -5.47200000e-02, 5.70577589e+10, -7.64376094e+04,
+                                    -7.80800000e-02, -7.64376094e+04, 3.15842153e+10]).reshape(3, 3),
             "coeffs_home": np.array([118298.619219974672887,
                                      0,
                                      5002.729695187197649
@@ -154,10 +153,11 @@ initialization_object = get_random_model_specification(
                                           0.066716619965600,
                                           -31343.568694616944413,
                                           -7246.492439852168900
-                                          ])
+                                          ]).reshape(4, 3)
 
             }
 )
+
 # define paras for optimizer
 max_evals = 1000000
 
@@ -173,9 +173,8 @@ args = (
 )
 adapter_smm = SimulationBasedEstimationCls(*args)
 
-
-box_lower = np.array([y[0] for x in box_dict.keys() for y in box_dict[x] ])
-box_upper = np.array([y[1] for x in box_dict.keys()for y in box_dict[x] ])
+box_lower = np.array([y[0] for x in box_dict.keys() for y in box_dict[x]])
+box_upper = np.array([y[1] for x in box_dict.keys() for y in box_dict[x]])
 
 kwargs = dict()
 kwargs['scaling_within_bounds'] = True
@@ -184,7 +183,6 @@ kwargs['objfun_has_noise'] = True
 # kwargs['maxfun'] = 100
 kwargs['maxfun'] = 10e6
 
-a = simulate(get_model_obj(initialization_object)).replace({"wages":{-99:np.nan}})
-
+# a = simulate(get_model_obj(initialization_object)).replace({"wages":{-99:np.nan}})
 
 rslt = pybobyqa.solve(adapter_smm.evaluate, adapter_smm.free_params, **kwargs)
