@@ -81,12 +81,13 @@ box_dict = {
 
 }
 
-initialization_object = get_random_model_specification(
-    constr={"num_periods": 49,
+model_spec_dict = {
+            "num_periods": 49,
             "num_agents_sim": 5000,
             "num_draws_emax": 5000,
             "num_types": 4,
             "num_edu_start": 1,
+            "start_age":17,
             "edu_max": 25,
             "seed_sim": 132,
             "seed_emax": 456,
@@ -99,18 +100,13 @@ initialization_object = get_random_model_specification(
                                      0.0,
                                      0.560420764935477,
                                      0.0
-                                     ]),
-            "intial_lagged_schooling_prob": float(1),
+                                    ]),
+            "initial_lagged_schooling_prob": float(1),
             "delta": 0.926,
-            # "shocks_cov": np.array([1.90836000e-01, -4.06073119e+04, -4.33622160e+04,
-            #                        -4.06073119e+04, 5.70574437e+10, -5.68684800e+04,
-            #                        -4.33622160e+04, -5.68684800e+04, 3.15822658e+10]),
-            # "shocks_cov":np.array([1.02400000e-01, 7.64376499e+04, 5.68702352e+04,
-            #                       7.64376499e+04, 5.70577570e+10, 4.24514368e+10,
-            #                       5.68702352e+04, 4.24514368e+10, 3.15842153e+10]),
-            "shocks_cov": np.array([1.02400000e-01, -5.47200000e-02, -7.80800000e-02,
-                                    -5.47200000e-02, 5.70577589e+10, -7.64376094e+04,
-                                    -7.80800000e-02, -7.64376094e+04, 3.15842153e+10]).reshape(3, 3),
+            "shocks_cov":np.array([ 1.02400000e-01, -5.47200000e-02, -7.80800000e-02,
+                                   -5.47200000e-02,  5.70577589e+10, -7.64376094e+04,
+                                   -7.80800000e-02, -7.64376094e+04,  3.15842153e+10]
+                                 ).reshape(3,3),
             "coeffs_home": np.array([118298.619219974672887,
                                      0,
                                      5002.729695187197649
@@ -153,11 +149,11 @@ initialization_object = get_random_model_specification(
                                           0.066716619965600,
                                           -31343.568694616944413,
                                           -7246.492439852168900
-                                          ]).reshape(4, 3)
+                                          ]).reshape(4,3)
+                                          }
 
-            }
-)
-
+#Initialize the model class instance
+initialization_object = get_model_obj(model_spec_dict)
 # define paras for optimizer
 max_evals = 1000000
 
@@ -171,7 +167,7 @@ args = (
     pos_dict,
     max_evals
 )
-adapter_smm = SimulationBasedEstimationCls(*args)
+#adapter_smm = SimulationBasedEstimationCls(*args)
 
 box_lower = np.array([y[0] for x in box_dict.keys() for y in box_dict[x]])
 box_upper = np.array([y[1] for x in box_dict.keys() for y in box_dict[x]])
@@ -183,6 +179,6 @@ kwargs['objfun_has_noise'] = True
 # kwargs['maxfun'] = 100
 kwargs['maxfun'] = 10e6
 
-# a = simulate(get_model_obj(initialization_object)).replace({"wages":{-99:np.nan}})
+a = simulate(initialization_object).replace({"wages":{-99:np.nan}})
 
-rslt = pybobyqa.solve(adapter_smm.evaluate, adapter_smm.free_params, **kwargs)
+#rslt = pybobyqa.solve(adapter_smm.evaluate, adapter_smm.free_params, **kwargs)
