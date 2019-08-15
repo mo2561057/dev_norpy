@@ -108,9 +108,9 @@ initialization_object = get_random_model_specification(
             # "shocks_cov":np.array([1.02400000e-01, 7.64376499e+04, 5.68702352e+04,
             #                       7.64376499e+04, 5.70577570e+10, 4.24514368e+10,
             #                       5.68702352e+04, 4.24514368e+10, 3.15842153e+10]),
-            "shocks_cov": np.array([1.02400000e-01, -5.47200000e-02, -7.80800000e-02,
-                                    -5.47200000e-02, 5.70577589e+10, -7.64376094e+04,
-                                    -7.80800000e-02, -7.64376094e+04, 3.15842153e+10]).reshape(3, 3),
+            "shocks_cov":np.array([ 1.02400000e-01, -5.47200000e-02, -7.80800000e-02,
+                                   -5.47200000e-02,  5.70577589e+10, -7.64376094e+04,
+                                   -7.80800000e-02, -7.64376094e+04,  3.15842153e+10]),
             "coeffs_home": np.array([118298.619219974672887,
                                      0,
                                      5002.729695187197649
@@ -183,6 +183,6 @@ kwargs['objfun_has_noise'] = True
 # kwargs['maxfun'] = 100
 kwargs['maxfun'] = 10e6
 
-# a = simulate(get_model_obj(initialization_object)).replace({"wages":{-99:np.nan}})
+a = simulate(get_model_obj(initialization_object)).replace({"wages":{-99:np.nan}})
 
-rslt = pybobyqa.solve(adapter_smm.evaluate, adapter_smm.free_params, **kwargs)
+#rslt = pybobyqa.solve(adapter_smm.evaluate, adapter_smm.free_params, **kwargs)
