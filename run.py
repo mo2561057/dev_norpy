@@ -9,7 +9,7 @@ from norpy.model_spec import get_random_model_specification, get_model_obj
 from smm_prep import get_moments, get_weigthing_matrix
 from norpy.adapter.SimulationBasedEstimation import SimulationBasedEstimationCls
 from optimizers.auxiliray_pyogba import wrapper_pybobyqa
-from auxiliary import moments_final, weigthing_final
+#from auxiliary import moments_final, weigthing_final
 
 # Container for optimization
 optim_paras = {
@@ -166,8 +166,8 @@ max_evals = 1000000
 # Now we start with the optimization
 args = (
     initialization_object,
-    moments_final,
-    weigthing_final,
+#    moments_final,
+#    weigthing_final,
     get_moments,
     optim_paras,
     pos_dict,
@@ -187,5 +187,7 @@ kwargs['objfun_has_noise'] = True
 kwargs['maxfun'] = 10e6
 
 a = simulate(initialization_object).replace({"wages":{-99:np.nan}})
+
+
 
 #rslt = pybobyqa.solve(adapter_smm.evaluate, adapter_smm.free_params, **kwargs)

@@ -12,12 +12,14 @@ dependencies:
   - matplotlib
   - jupyter
   - seaborn
-  - yaml
+  - pyyaml
   - pip
   
   - pip:
     - pysftp 
     - Py-BOBYQA
+    - numba
+    - estimagic
     - DFO-LS
     - mpi4py
     - PyPDF2
